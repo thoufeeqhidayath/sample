@@ -3,6 +3,12 @@ package expenseManage.expenseManage;
 public class viewobject {
 	int id;
 	float amount;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
 	String mode;
 	String reason;
 	float bal;
@@ -46,6 +52,12 @@ public class viewobject {
 		this.mode = mode;
 		this.reason = reason;
 		this.bal = bal;
+	}
+	String name;
+	public viewobject(int id, String name) {
+		this.id = id;
+		this.name = name;
+		
 	}
 
 }

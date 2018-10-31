@@ -47,4 +47,6 @@ public interface accountRepository {
 	public undoModels getResultsets(String tablename,int id) throws SQLException;
 
 	public undoModels getResultsetss(String accountname, int deleteid) throws SQLException;
+
+	public ArrayList<viewobject> selectAccounts() throws SQLException;
 }

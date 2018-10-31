@@ -439,6 +439,28 @@ public void updatedbalances(String tablename) throws SQLException, ClassNotFound
 	        }
 	        }
 	 }
+
+public ArrayList<viewobject> selectAccounts() throws SQLException {
+	viewobject object=new viewobject();
+	ArrayList<viewobject> sendArray=new ArrayList<viewobject>();
+    stmt = createStatement();
+
+      String sql = "SELECT id,name FROM "+"userdetails";
+      ResultSet rs = stmt.executeQuery(sql);
+       
+      while(rs.next()){
+    	  int id  = rs.getInt("id");
+         String name = rs.getString("name");
+        
+        object=new viewobject(id,name);
+        
+         sendArray.add(object);
+      }
+      rs.close();
+	return sendArray;
+	
+	
+}
 	
   
 

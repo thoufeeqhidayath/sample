@@ -370,6 +370,7 @@ public class accountManageService{
 		    int n=commonServices.nextid(name)+1;
 		    String k2 = Integer.toString(n);
 		    String amountss=Double.toString(amount);
+		    repoMode.updatedbalances(name);
 		    float bl=(float) (commonServices.nextbal(name)-amount);
 		    String amounts="'"+amountss+"'";
 		    repoMode.insertIntoUsertable(name,n,amountss,mode,reasons,bl);
@@ -377,6 +378,7 @@ public class accountManageService{
 		    n=commonServices.nextid(accountname)+1;
 		    repoMode.updatedbalances(name);
 			mode="transferredfrom";
+			repoMode.updatedbalances(accountname);
 			bl=(float) (commonServices.nextbal(name)+(amount));
 			 
 			 repoMode.insertIntoUsertable(accountname,n,amountss,mode,reasons,bl);

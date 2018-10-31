@@ -1,14 +1,12 @@
 package expenseManage.expenseManage;
 
-import java.io.BufferedReader;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,14 +17,14 @@ import org.springframework.stereotype.Service;
 public class accountFilerepository implements accountRepository {
 	
 
-	String filename="/Users/Mubarak/Documents/workspa/accountmanagement/src/accountmanagement/accholders.txt";
-	String accnum="/Users/Mubarak/Documents/workspa/accountmanagement/src/accountmanagement/userdetails.txt";
-	//
+	String filename="files/accholders.txt";
+	String accnum="files/userdetails.txt";
+    String pathOfFile="files/";
 	
 
 	public void createUserTable(String username) throws SQLException, IOException 
 	{
-	    String path="/Users/Mubarak/Documents/"+username+".txt";
+	    String path=pathOfFile+username+".txt";
 	    File file = new File(path);
        
 	    if (!file.exists()) 
@@ -60,22 +58,23 @@ public class accountFilerepository implements accountRepository {
 		accnumget.useDelimiter(" |\n");
 		int currentnumber;
 		currentnumber=Integer.parseInt(accnumget.next());
+		accnumget.close();
 		return currentnumber;
 	}
 	
    public int readMaxOfid(String username) throws SQLException, FileNotFoundException 
    {int counts=0;
 	   int count=0;
-	   String path="/Users/Mubarak/Documents/"+username+".txt";
+	   String path=pathOfFile+username+".txt";
 		String a="0";
 		Scanner read = new Scanner(new File(path));
 		read.useDelimiter("\n|,");
 		while(read.hasNext())
 		{a=read.next();
-		String b=read.next();
-		String c=read.next();
-		String d=read.next();
-		String e=read.next();
+	   read.next();
+		read.next();
+		read.next();
+	read.next();
 		count++;
 		}
 		int m=Integer.parseInt(a);
@@ -93,7 +92,7 @@ public class accountFilerepository implements accountRepository {
 		try 
 		{ 
 			FileWriter fw;
-			fw = new FileWriter("/Users/Mubarak/Documents/"+accountname+".txt",true);
+			fw = new FileWriter(pathOfFile+accountname+".txt",true);
 			BufferedWriter bw = new BufferedWriter(fw);
 			bw.write(id+","+amount+","+"deposit"+","+reason+","+bal+"\n");
 			bw.close();
@@ -115,7 +114,7 @@ public class accountFilerepository implements accountRepository {
 	{
 			
 		FileWriter fw;
-		fw = new FileWriter("/Users/Mubarak/Documents/"+accountname+".txt",true);
+		fw = new FileWriter(pathOfFile+accountname+".txt",true);
 		BufferedWriter bw = new BufferedWriter(fw);
 		bw.write(id+","+amount+","+mode+","+reason+","+bal+"\n");
 		bw.close();
@@ -128,9 +127,9 @@ public class accountFilerepository implements accountRepository {
 
 	public double getBalance(String accountname, int accountid) throws SQLException, FileNotFoundException 
 	{
-		Double balance=0.0;
+		
 		int count=0;
-		String openaccount="/Users/Mubarak/Documents/"+accountname+".txt";
+		String openaccount=pathOfFile+accountname+".txt";
 		String e="0";
 		Scanner read = new Scanner(new File(openaccount));
 		read.useDelimiter(" |\n|,");
@@ -145,14 +144,12 @@ public class accountFilerepository implements accountRepository {
 		count++;
 		}
 		
-		double ss=0.0;
-		double m=Double.parseDouble(e);
 		
-		if(count<1)	
-			balance = 0.0;
-		else
-		    balance=m;
-		return balance;
+		double m=Double.parseDouble(e);
+		read.close();
+	
+		
+		return m;
 		
 	}
 
@@ -201,7 +198,7 @@ public class accountFilerepository implements accountRepository {
 	
 	{
 	
-		File file = new File("/Users/Mubarak/Documents/"+tablename+".txt");
+		File file = new File(pathOfFile+tablename+".txt");
 		file.delete();
 	}
 
@@ -210,9 +207,9 @@ public class accountFilerepository implements accountRepository {
 		int count = 0;
 		
 	    HashMap<Integer,undoModels> accountmap = new HashMap<Integer,undoModels>(100);
-		undoModels[] copyobjects = new undoModels[100];
-		String filename="/Users/Mubarak/Documents/"+accountname+".txt";
-		Scanner scan = new Scanner(new File("/Users/Mubarak/Documents/"+accountname+".txt"));
+
+		String filename=pathOfFile+accountname+".txt";
+		Scanner scan = new Scanner(new File(pathOfFile+accountname+".txt"));
 		scan.useDelimiter(",|\n");
 		undoModels[] s = new undoModels[100];
 		while(scan.hasNext())
@@ -257,13 +254,14 @@ public class accountFilerepository implements accountRepository {
 	{
 		
 	}
+	
 	}
 
 
 	public void deleteFromUserTable(String accountname) throws SQLException {
 		try {
 			HashMap<Integer,accountFilerepositoryModel> newmap = new HashMap<Integer, accountFilerepositoryModel>(100);
-		accountFilerepositoryModel[] saveobject=new accountFilerepositoryModel[10000];
+		accountFilerepositoryModel[] saveobject=new accountFilerepositoryModel[100000];
 		 String returnName = "falseoutput";
 		 int count=0;
 		 Scanner scan;
@@ -290,11 +288,11 @@ public class accountFilerepository implements accountRepository {
 		
 		 FileWriter fw;
 		
-			fw = new FileWriter(filename,true);
+			fw = new FileWriter(filename);
 		
 			BufferedWriter bw = new BufferedWriter(fw);
 			
-			accountFilerepositoryModel[] saveobject1=new accountFilerepositoryModel[10000];
+			accountFilerepositoryModel[] saveobject1=new accountFilerepositoryModel[100000];
 			
 			
 			for(int i=0;i<count;i++)
@@ -327,8 +325,8 @@ public class accountFilerepository implements accountRepository {
 			
 		    HashMap<Integer,undoModels> accountmap = new HashMap<Integer,undoModels>(100);
 			undoModels[] copyobjects = new undoModels[100];
-			String filename="/Users/Mubarak/Documents/"+accountname+".txt";
-			Scanner scan = new Scanner(new File("/Users/Mubarak/Documents/"+accountname+".txt"));
+			String filename=pathOfFile+accountname+".txt";
+			Scanner scan = new Scanner(new File(pathOfFile+accountname+".txt"));
 			scan.useDelimiter(",|\n");
 			undoModels[] s = new undoModels[100];
 			while(scan.hasNext())
@@ -383,8 +381,8 @@ public class accountFilerepository implements accountRepository {
 			
 		    HashMap<Integer,undoModels> accountmap = new HashMap<Integer,undoModels>(100);
 			undoModels[] copyobjects = new undoModels[100];
-			String filename="/Users/Mubarak/Documents/"+accountname+".txt";
-			Scanner scan = new Scanner(new File("/Users/Mubarak/Documents/"+accountname+".txt"));
+			String filename=pathOfFile+accountname+".txt";
+			Scanner scan = new Scanner(new File(pathOfFile+accountname+".txt"));
 			scan.useDelimiter(",|\n");
 			undoModels[] s = new undoModels[100];
 			while(scan.hasNext())
@@ -447,9 +445,9 @@ public class accountFilerepository implements accountRepository {
 	ArrayList<viewobject> sendArray=new ArrayList<viewobject>();
    
 try{
-	undoModels[] copyobjects = new undoModels[100];
 	
-	Scanner scan = new Scanner(new File("/Users/Mubarak/Documents/"+tablename+".txt"));
+	
+	Scanner scan = new Scanner(new File(pathOfFile+tablename+".txt"));
 	scan.useDelimiter(",|\n");
    
 	while(scan.hasNext())
@@ -485,7 +483,7 @@ try{
 		
 		public void insertIntoUsertable(String accountname,int id,String amount,String mode,String reason,float bal) throws SQLException 
 		  {	 
-			filename = "/Users/Mubarak/Documents/"+accountname+".txt";
+			filename = pathOfFile+accountname+".txt";
 			FileWriter f1;
 			BufferedWriter b1;
 			try
@@ -505,7 +503,7 @@ try{
 
 		public void sort(String accountname) throws SQLException, ClassNotFoundException {
 			try{
-			String number="/Users/Mubarak/Documents/"+accountname+".txt";;
+			String number=pathOfFile+accountname+".txt";;
 			FileReader f2 = new FileReader(number);
 		    Scanner scan = new Scanner(f2);
 		    scan.useDelimiter(" |\n|,");
@@ -568,13 +566,12 @@ try{
 			
 		{
 			
-		 String number="/Users/Mubarak/Documents/"+tablename+".txt";;
+		 String number=pathOfFile+tablename+".txt";;
 		 FileReader f2 = new FileReader(number);
 		 Scanner scan = new Scanner(f2);
 		 scan.useDelimiter("\n|,");
 		 HashMap<Integer,undoModels> accountmap1 = new HashMap<Integer,undoModels>(100);
-			undoModels[] copyobj=new undoModels[100];
-		copyobj = new undoModels[100];
+			
 		int counts = 0;
 		accountmap1 = new HashMap<Integer,undoModels>(100);
 		undoModels[] copyobj1s = new undoModels[100];
@@ -591,24 +588,28 @@ try{
 		 
 		 if(x.equals("deposit"))
 		 {
+			 
 	     double z4=Double.parseDouble(z1);
 		 updbal=updbal+z4;
 		 String newbal=Double.toString(updbal);
 		 copyobj1s[counts]=new undoModels(b,z1,x,c,newbal);
 		 accountmap1.put(counts,copyobj1s[counts]);
 		 counts++;
+		 
 		 }
 		 
 		 else if(x.equals("withdraw"))
 		 {
+			 
 		double z4=Double.parseDouble(z1);
 		updbal=updbal-z4;
 		String newbal=Double.toString(updbal);
 		copyobj1s[counts]=new undoModels(b,z1,x,c,newbal);
 		accountmap1.put(counts,copyobj1s[counts]);
 		counts++;
+		
 		}
-		 else if((x.indexOf("transferrfromaccount:"))==0)
+		 else if((x.indexOf("transferredfrom"))==0)
 		
 		 {
 	    
@@ -620,32 +621,35 @@ try{
 		counts++;
 			
 		}
-		 else if((x.indexOf("transferredtoaccount:"))==0)
+		 else if((x.indexOf("transferredto:"))==0)
 		{
+			 
 	    double z4=Double.parseDouble(z1);
 		updbal=updbal-z4;
 		String newbal=Double.toString(updbal);
 		copyobj1s[counts]=new undoModels(b,z1,x,c,newbal);
 		accountmap1.put(counts,copyobj1s[counts]);
 		counts++;	
+		
 		}
 		 else
-		{	 
+		{
+			 
 		copyobj1s[counts]=new undoModels(b,z1,x,c,z1);
 		accountmap1.put(counts,copyobj1s[counts]);
 		counts++;
+		
 		}
 		} 
 		
 		FileWriter fw = new FileWriter(number);
 		BufferedWriter bw = new BufferedWriter(fw);
 
-		saveobject[0]=new undoModels(accountmap1.get(0).a,accountmap1.get(0).b,accountmap1.get(0).c,accountmap1.get(0).d,accountmap1.get(0).e);
-		bw.write(saveobject[0].a+","+saveobject[0].b+","+saveobject[0].c+","+saveobject[0].d+","+saveobject[0].e+"\n");
 		
-		if(counts>0)
 		
-			for(int i=1;i<counts;i++)
+		
+		
+			for(int i=0;i<counts;i++)
 		{
 			saveobject[i]=new undoModels(accountmap1.get(i).a,accountmap1.get(i).b,accountmap1.get(i).c,accountmap1.get(i).d,accountmap1.get(i).e);
 
@@ -675,10 +679,10 @@ try{
 			
 	
 		    String checkid=Integer.toString(id);
-		    HashMap<Integer,undoModels> accountmap = new HashMap<Integer,undoModels>(100);
-			undoModels[] copyobjects = new undoModels[100];
+		    
 			
-			Scanner scan = new Scanner(new File("/Users/Mubarak/Documents/"+tablename+".txt"));
+			
+			Scanner scan = new Scanner(new File(pathOfFile+tablename+".txt"));
 			scan.useDelimiter(",|\n");
 		   
 			while(scan.hasNext())
@@ -707,19 +711,21 @@ try{
 		
 			return returnobject;
 		}
+		
 		public undoModels getCompleteResultsets(String currentusernumber,int id) throws SQLException
+		
 		{ 
 			undoModels returnobject=new undoModels(); 
 		
 		try
+		
 		{
 		
 
 	    String checkid=Integer.toString(id);
-	    HashMap<Integer,undoModels> accountmap = new HashMap<Integer,undoModels>(100);
-		undoModels[] copyobjects = new undoModels[100];
+	   
 		
-		Scanner scan = new Scanner(new File("/Users/Mubarak/Documents/"+currentusernumber+".txt"));
+		Scanner scan = new Scanner(new File(pathOfFile+currentusernumber+".txt"));
 		scan.useDelimiter(",|\n");
 	   
 		while(scan.hasNext())
@@ -753,8 +759,79 @@ try{
 		}
 
 		public undoModels getResultsetss(String accountname, int deleteid) throws SQLException {
-			// TODO Auto-generated method stub
-			return null;
+                   
+			undoModels returnobject=new undoModels(); 
+			
+			try
+			
+			{
+			
+	
+		    String checkid=Integer.toString(deleteid);
+		  
+			Scanner scan = new Scanner(new File(pathOfFile+accountname+".txt"));
+			scan.useDelimiter(",|\n");
+		   
+			while(scan.hasNext())
+			{
+				
+			String h = scan.next();
+			String z1 = scan.next();
+			String x = scan.next();
+			String c = scan.next();
+			String p=scan.next();
+			int idq=Integer.parseInt(h);
+			float bal=Float.parseFloat(p);
+			if(h.equals(checkid))
+			{
+				returnobject=new undoModels(idq,z1,x,c,bal);
+			}
+			}
+			
+			
+			scan.close();
+			}catch(FileNotFoundException e)
+			{
+				
+			}
+			
+		
+			return returnobject;
+		
+			
+		}
+
+		public ArrayList<viewobject> selectAccounts() throws SQLException {
+			
+			viewobject object=new viewobject();
+			ArrayList<viewobject> sendArray=new ArrayList<viewobject>();
+		   
+		try{
+			
+			
+			Scanner scan = new Scanner(new File("files/accholders.txt"));
+			scan.useDelimiter(",|\n");
+		   
+			while(scan.hasNext())
+			{
+				
+			String h = scan.next();
+			String name= scan.next();
+			
+			int idq=Integer.parseInt(h);
+			
+			   object=new viewobject(idq,name);
+		       
+		       sendArray.add(object);
+			}
+			scan.close();
+			
+		     }
+		    catch(FileNotFoundException e)
+			{    }
+			
+			return sendArray;
+			
 		}
 	
 }

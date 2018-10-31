@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,7 +48,11 @@ public class accountService
 		return object;
 		
 	}
-
+ public ArrayList<viewobject>  viewAccount() throws SQLException
+ {
+	 ArrayList<viewobject> send= repoMode.selectAccounts();
+		return send;
+ }
      
     
 	public int createaccount(String username) throws ClassNotFoundException, SQLException, IOException

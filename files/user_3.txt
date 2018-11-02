@@ -1,9 +1,0 @@
-1,1000.0,deposit,jhe,1000.0
-1,1000.0,deposit,jhe,3000.0
-1,1000.0,deposit,jhe,2000.0
-2,23.0,withdraw,wds,2954.0
-2,23.0,withdraw,wds,2931.0
-2,23.0,withdraw,wds,2977.0
-3,1000.0,deposit,w,3931.0
-4,23.0,withdraw,we,3908.0
-5,43.0,deposit,tu,3951.0

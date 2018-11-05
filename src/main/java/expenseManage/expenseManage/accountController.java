@@ -18,6 +18,11 @@ public class accountController {
 	@Autowired
 	private accountService accountService;
 	
+	@RequestMapping(value= "/" ,method = RequestMethod.GET)
+	public String initialize(@RequestParam(value="names",defaultValue="nothing")String names) throws ClassNotFoundException, SQLException, IOException
+	{
+		return "account created successfully for ";
+	}
 	
 	@RequestMapping(value= "/createaccount" ,method = RequestMethod.GET)
 	public String createUser(@RequestParam(value="names",defaultValue="nothing")String names) throws ClassNotFoundException, SQLException, IOException
@@ -31,6 +36,7 @@ public class accountController {
 	{
 		return "deleted account with name:"+ accountService.deleteaccount(number);
 	} 
+	
 	
 	@RequestMapping(value= "/viewaccounts" ,method = RequestMethod.GET)
 	public  ArrayList<viewobject> viewUserAccount() throws ClassNotFoundException, SQLException, IOException

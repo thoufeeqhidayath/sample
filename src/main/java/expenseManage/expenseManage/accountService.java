@@ -15,8 +15,8 @@ public class accountService
 	@Autowired
 	private commonServices commonServices;
 	
-	
-    String filename="/Users/Mubarak/Documents/workspace/expenseManage/config.txt";
+	String filename="files/config.txt";
+    
 	
 	accountRepository repoMode=check();
 

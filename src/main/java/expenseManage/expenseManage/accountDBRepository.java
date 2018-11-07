@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class accountDBRepository implements accountRepository{
 	final static  String JDBC_DRIVER = "com.mysql.cj.jdbc.driver";  
-    final static String DB_URL = "jdbc:mysql://application.clvpdg9fapxi.us-east-2.rds.amazonaws.com:3306/application";
+    final static String DB_URL = "jdbc:mysql://localhost:3306/application";
     
    //  Database credentials
   final static String USER = "root";
@@ -27,7 +27,7 @@ public class accountDBRepository implements accountRepository{
 	
 	public Connection createConnection() throws SQLException
 	{
-		 conn= DriverManager.getConnection("jdbc:mysql://application.clvpdg9fapxi.us-east-2.rds.amazonaws.com:3306/application?autoReconnect=true&useSSL=false&maxReconnects=10 ",USER,PASS);
+		 conn= DriverManager.getConnection("jdbc:mysql://localhost:3306/application?autoReconnect=true&useSSL=false&maxReconnects=10 ",USER,PASS);
 		 return conn;
 	}
 	

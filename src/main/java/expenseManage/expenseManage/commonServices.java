@@ -18,7 +18,7 @@ import org.springframework.stereotype.Service;
 public class commonServices  {
   
 
-	String filename="files/config.txt";
+	String filename="config.txt";
 	
 accountRepository object=check();
 

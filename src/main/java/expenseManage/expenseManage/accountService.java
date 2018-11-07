@@ -15,7 +15,7 @@ public class accountService
 	@Autowired
 	private commonServices commonServices;
 	
-	String filename="files/config.txt";
+	String filename="config.txt";
     
 	
 	accountRepository repoMode=check();

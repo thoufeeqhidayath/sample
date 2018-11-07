@@ -17,7 +17,7 @@ public class accountDBRepository implements accountRepository{
     final static String DB_URL = "jdbc:mysql://localhost:3306/application";
     
    //  Database credentials
-  final static String USER = "root";
+  final static String USER = "thou";
    final static String PASS = "password";
   @Autowired
   protected static Statement stmt=null;

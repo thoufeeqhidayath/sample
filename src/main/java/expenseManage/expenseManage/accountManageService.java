@@ -33,7 +33,7 @@ public class accountManageService{
 	Stack<undoModels> undo=new Stack<undoModels>();
  
 	
-	String filename="config.txt";
+	String filename="files/config.txt";
 	
 	accountRepository repoMode=check();
 
